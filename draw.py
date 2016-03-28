@@ -4,19 +4,56 @@ import math
 
 
 def add_box( points, x, y, z, width, height, depth ):
-    return 0
-
+    add_edge(points, x,         y,          z,         x,         y,          z        )
+    add_edge(points, x,         y + height, z,         x,         y + height, z        )
+    add_edge(points, x,         y,          z + depth, x,         y,          z + depth)
+    add_edge(points, x,         y + height, z + depth, x,         y + height, z + depth)
+    add_edge(points, x + width, y,          z,         x + width, y,          z        )
+    add_edge(points, x + width, y + height, z,         x + width, y + height, z        )
+    add_edge(points, x + width, y,          z + depth, x + width, y,          z + depth)
+    add_edge(points, x + width, y + height, z + depth, x + width, y + height, z + depth)
+    
 def add_sphere( points, cx, cy, cz, r, step ):
-    return 0
+    temp = generate_sphere(points, cx, cy, cz, r, step)
+    for i in temp:
+        add_edge(points, i[0], i[1], i[2], i[0], i[1], i[2])
 
 def generate_sphere( points, cx, cy, cz, r, step ):
-    return 0
+    returner = []
+    circle = 0
+    slicer = 0 
+    while slicer <= 1:
+        while circle <= 1:
+            x = r * math.cos(math.pi * circle) + cx
+            y = r * math.sin(math.pi * circle) * math.cos(2 * math.pi * slicer) + cy
+            z = r * math.sin(math.pi * circle) * math.sin(2 * math.pi * slicer) + cz
+            returner.append([x, y, z, 1])
+            circle += step
+        slicer += step
+        circle = 0
+    return returner
+
 
 def add_torus( points, cx, cy, cz, r0, r1, step ):
-    return 0
+    temp = generate_torus(points, cx, cy, cz, r0, r1, step)
+    for i in temp:
+        add_edge(points, i[0], i[1], i[2], i[0], i[1], i[2])
 
 def generate_torus( points, cx, cy, cz, r0, r1, step ):
-    return 0
+    returner = []
+    circle = 0
+    slicer = 0 
+    while slicer <= 1:
+        while circle <= 1:
+            x = (r0 * math.sin(2 * math.pi * circle) + r1) * math.cos(2 * math.pi * slicer) + cx
+            y =  r0 * math.cos(2 * math.pi * circle) + cy
+            z = (r0 * math.sin(2 * math.pi * circle) + r1) * math.sin(2 * math.pi * slicer) + cz
+            returner.append([x, y, z, 1])
+            circle += step
+        slicer += step
+        circle = 0
+    return returner
+
 
 
 def add_circle( points, cx, cy, cz, r, step ):
@@ -24,8 +61,7 @@ def add_circle( points, cx, cy, cz, r, step ):
     y0 = cy
 
     t = step
-    while t<= 1:
-        
+    while t<= 1:        
         x = r * math.cos( 2 * math.pi * t ) + cx
         y = r * math.sin( 2 * math.pi * t ) + cy
 

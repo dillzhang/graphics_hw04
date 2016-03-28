@@ -1,0 +1,20 @@
+torus
+0 0 40 100
+torus
+0 100 35 90
+torus
+0 200 30 80
+torus
+0 300 25 70
+sphere
+0 400 60
+ident
+translate
+250 100 0
+xrotate
+30
+apply
+display
+save
+pic.png
+quit
